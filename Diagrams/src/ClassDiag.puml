@@ -1,0 +1,52 @@
+@startuml
+    Class Controller
+    Class Game
+        Controller o-- Game
+    Class View
+        Controller o-- View
+        Class GUI_View
+        Class TUI_View
+        View <|-- GUI_View
+        View <|-- TUI_View
+
+    Class Board
+        Game o-- "1" Board
+
+    Class Player
+        Game o-- "3,4" Player
+        Class LocalPlayer
+        LocalPlayer --|> Player
+        Class NetworkPlayer
+        NetworkPlayer --|> Player
+        Class ComputerPlayer
+        ComputerPlayer --|> Player
+    
+    Class Piece{
+        (Int, Int) coordinates
+
+    }
+        Board o-- "0..*" Piece
+        Player o-- "0..*" Piece
+        Piece o-- Player : Owned by
+        Enum PieceType {
+            Settlement
+            City
+            Street
+        }
+            Piece o-- PieceType
+        
+    Class Tile{
+        Int boardIndex
+    }
+        Board o-- Tile
+        Enum TileType{
+            Forest
+            Hill
+            Pasture
+            Field
+            Mountain
+        }
+        Tile o-- TileType
+    
+
+@enduml
